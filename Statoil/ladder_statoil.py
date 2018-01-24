@@ -288,7 +288,7 @@ with tf.variable_scope("decoder_bloc_0", reuse = tf.AUTO_REUSE):
     z = tf.get_default_graph().get_tensor_by_name("AE_clean/h0:0")
     mean, var = tf.constant(0.0), tf.constant(1.0)
     
-    z_est_BN = decoder_bloc(u, z_corr, mean, var)
+    u, z_est_BN = decoder_bloc(u, z_corr, mean, var)
     d_cost.append((tf.reduce_mean(tf.square(z_est_BN - z))) * denoising_cost[0])
 
 
