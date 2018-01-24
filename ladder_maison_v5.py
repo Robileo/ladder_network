@@ -68,7 +68,7 @@ checkpoint_dir = "checkpoints_iceberg/"
 
 image_shape = [96, 96, 2]
 
-num_epochs = 1
+num_epochs = 30
 starter_learning_rate = 0.02
 decay_after = 5  # epoch after which to begin learning rate decay
 batch_size = 100
@@ -404,12 +404,12 @@ print("Final Accuracy: ", final_accuracy, "%")
 
 
 # Submission
-test_images = data_sat.test.images
-predictions = sess.run(FF_y, feed_dict={feedforward_inputs: test_images, training: False})
-df = pd.read_json(file_unlabeled)
-
-submission = pd.DataFrame({'id': df["id"], 'is_iceberg': predictions.reshape((predictions.shape[0]))})
-submission.head(10)
-submission.to_csv("submission.csv", index=False)
+#test_images = data_sat.test.images
+#predictions = sess.run(FF_y, feed_dict={feedforward_inputs: test_images, training: False})
+#df = pd.read_json(file_unlabeled)
+#
+#submission = pd.DataFrame({'id': df["id"], 'is_iceberg': predictions.reshape((predictions.shape[0]))})
+#submission.head(10)
+#submission.to_csv("submission.csv", index=False)
     
     
