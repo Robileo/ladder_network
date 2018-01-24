@@ -1,6 +1,7 @@
-checkpoint
+*.pyc
 *.data-00000-of-00001
 *.index
 *.meta
 *.gz
+MNIST/checkpoints/checkpoint
 *.json
