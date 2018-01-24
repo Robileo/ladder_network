@@ -404,12 +404,19 @@ print("Final Accuracy: ", final_accuracy, "%")
 
 
 # Submission
-#test_images = data_sat.test.images
-#predictions = sess.run(FF_y, feed_dict={feedforward_inputs: test_images, training: False})
-#df = pd.read_json(file_unlabeled)
-#
-#submission = pd.DataFrame({'id': df["id"], 'is_iceberg': predictions.reshape((predictions.shape[0]))})
-#submission.head(10)
-#submission.to_csv("submission.csv", index=False)
+test_images = data_sat.test.images
+N = test_images.shape[0]
+predictions = np.ones([N,2])
+for i in range(0,N,100):
+    end = min(i + 100, N)
+    predictions[i:end,:] = sess.run(FF_y, feed_dict={feedforward_inputs: test_images[i:end], training: False})
+
+predictions = predictions[:,1]
+    
+df = pd.read_json(file_unlabeled)
+
+submission = pd.DataFrame({'id': df["id"], 'is_iceberg': predictions.reshape((predictions.shape[0]))})
+submission.head(10)
+submission.to_csv("submission.csv", index=False)
     
     
