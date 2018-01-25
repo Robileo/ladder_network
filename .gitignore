@@ -5,3 +5,5 @@
 *.gz
 MNIST/checkpoints/checkpoint
 *.json
+*.csv
+Statoil/checkpoints_iceberg/checkpoint

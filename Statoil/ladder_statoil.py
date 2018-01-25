@@ -1,5 +1,5 @@
 import tensorflow as tf
-import input_data_iceberg
+import input_data_statoil
 import math
 import os
 import csv
@@ -61,8 +61,8 @@ layers = [{"type": "conv2d", "kernel_shape": [3,3,2,16]}, # 28x28x1 -> 28x28x32
 #           {"type": "dense", "kernel_shape": [250, 10]}]
            
 
-file_labeled = "../Train/train.json"
-file_unlabeled = "../Test/test.json"
+file_labeled = "Inputs/train.json"
+file_unlabeled = "Inputs/test.json"
 
 checkpoint_dir = "checkpoints_iceberg/"
 
@@ -320,7 +320,7 @@ print(str(n) + " trainable parameters")
 #========================================================================================================================
     # Learning phase
 print("===  Loading Data ===")
-data_sat = input_data_iceberg.read_data_sets(file_labeled, file_unlabeled, image_shape, val_ratio = 0.2)
+data_sat = input_data_statoil.read_data_sets(file_labeled, file_unlabeled, image_shape, val_ratio = 0.2)
 num_examples = data_sat.train.unlabeled_ds.images.shape[0]
 num_iter = (num_examples//batch_size) * num_epochs  # number of loop iterations
 
