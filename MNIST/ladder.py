@@ -1,15 +1,22 @@
 import tensorflow as tf
 import input_data
-import math
 import os
-import csv
-from functools import reduce
 import numpy as np
-import sys
 import time
-import pandas as pd
-from utils import flat, max_pool_2x2, unpool, run_layer, run_transpose_layer
+from utils import flat, max_pool_2x2, run_layer, run_transpose_layer
 
+# Definition of the layers of the feedforward network. Four types of layers are avaiable :
+# conv2d, max_pool_2x2, dense, flat.
+# The convolution layers have always a stide of 1, and padding is set as "same".
+# The kernel shapes should be carefully defined to avoid non-compatibilities 
+# between the layers and their inputs.
+
+layers = [ {"type": "dense", "kernel_shape": [784, 1000]},
+           {"type": "dense", "kernel_shape": [1000, 500]},
+           {"type": "dense", "kernel_shape": [500, 250]},
+           {"type": "dense", "kernel_shape": [250, 250]},
+           {"type": "dense", "kernel_shape": [250, 250]},
+           {"type": "dense", "kernel_shape": [250, 10]}]
 
 #layers = [{"type": "conv2d", "kernel_shape": [5,5,1,32]}, # 28x28x1 -> 28x28x32
 #           {"type": "max_pool_2x2"},                      # 28x28x32 -> 14x14x32
@@ -18,14 +25,6 @@ from utils import flat, max_pool_2x2, unpool, run_layer, run_transpose_layer
 #           {"type": "flat"},                               # 7x7x64 -> 3136
 #           {"type": "dense", "kernel_shape": [7*7*64, 1024]},# 3136 -> 1024
 #           {"type": "dense", "kernel_shape": [1024, 10]}]    # 1024 -> 10
-
-
-layers = [ {"type": "dense", "kernel_shape": [784, 1000]},
-           {"type": "dense", "kernel_shape": [1000, 500]},
-           {"type": "dense", "kernel_shape": [500, 250]},
-           {"type": "dense", "kernel_shape": [250, 250]},
-           {"type": "dense", "kernel_shape": [250, 250]},
-           {"type": "dense", "kernel_shape": [250, 10]}]
 
 # hyperparameters that denote the importance of each layer
 denoising_cost = [1000.0, 10.0, 0.10, 0.10, 0.10, 0.10, 0.10]
